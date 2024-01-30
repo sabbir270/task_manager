@@ -6,8 +6,19 @@
     <title>{% block title %}Task Manager{% endblock %}</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        
-    
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background color */
+        }
+        .jumbotron {
+            background-color: #007bff; /* Blue background color */
+            color: #ffffff; /* White text color */
+            padding: 2rem;
+            border-radius: 10px; /* Rounded corners */
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,20 +31,43 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Task Creation </a>
+                    <form method="post" action="{% url 'account:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link">Logout</button>
+                    </form>
                 </li>
                 
+                    <li class="nav-item active">
+                       
+                          <a class="nav-link" href="#"> Welcome {{ user.username }}</a> 
+                        
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'account:signup' %}">Signup</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Task Creation</a>
+                </li>
             </ul>
         </div>
     </nav>
-
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Task Manager!</h1>
+        <p class="lead">Your go-to solution for managing tasks efficiently.</p>
+        <!-- You can customize the content of the jumbotron as needed -->
+    </div>
     <div class="container mt-4">
         {% block content %}
         {% endblock %}
     </div>
 
-   
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js" integrity="sha384-MXmm09xq7J3/j1Ml70aqwq7/TBL98JSNfSeh8vME/D2IStEmNE1q5NyoiXnCpEm"

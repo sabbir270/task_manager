@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-s$u@%ryh(fqec3+z+q1qyk*jre78%y6w5c&5mko%(bw5&+ad)+
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGIN_URL = 'account:login'
+LOGIN_REDIRECT_URL = 'tasks:task_list'
 
 # Application definition
 
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tasks'
+    'tasks',
+    'account',
 ]
 
 MIDDLEWARE = [
