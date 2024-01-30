@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Task Details</h2>
+  <dl>
+    <dt>Title:</dt>
+    <dd>{{ task.title }}</dd>
+    
+    <dt>Description:</dt>
+    <dd>{{ task.description }}</dd>
+    
+    <dt>Due Date:</dt>
+    <dd>{{ task.due_date }}</dd>
+    
+    <dt>Priority:</dt>
+    <dd>{{ task.priority }}</dd>
+    
+    <dt>Complete:</dt>
+    <dd>{{ task.is_complete }}</dd>
+    
+    <dt>Assigned User:</dt>
+    <dd>{{ task.assigned_user }}</dd>
+
+    <dt>Photos:</dt>
+    <dd>
+      {% for photo in task.photos.all %}
+        <img src="{{ photo.photo.url }}" alt="Task Photo">
+      {% endfor %}
+    </dd>
+
+    
+    <a href="{% url 'tasks:task_update' pk=task.pk %}">Edit Task</a>
+
+    
+    <a href="{% url 'tasks:task_confirm_delete' pk=task.pk %}" class="btn btn-danger">Delete Task</a>
+
+    
+  </dl>
+{% endblock %}

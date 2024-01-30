@@ -23,7 +23,7 @@ class Task(models.Model):
 
 class TaskPhoto(models.Model):
     task = models.ForeignKey(Task, related_name='photos', on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to='task_photos/')
+    photo = models.ImageField(upload_to='task_image/')
 
     def __str__(self):
         return f"{self.task.title} - Photo {self.pk}"
