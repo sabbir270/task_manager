@@ -1,12 +1,26 @@
 **required package:**
 
 asgiref==3.7.2
+
+
 Django==5.0.1
+
+
 django-multiupload==0.6.1
+
+
 djangorestframework==3.14.0
+
+
 pillow==10.2.0
+
+
 psycopg2-binary==2.9.9
+
+
 python-decouple==3.8
+
+
 pytz==2023.4
 sqlparse==0.4.4
 typing_extensions==4.9.0
