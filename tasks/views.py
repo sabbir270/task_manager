@@ -3,17 +3,36 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.urls import reverse_lazy
 from .models import Task
 from .forms import TaskCreationForm
+from django.db.models import Q, Case, When, Value
+from django.db import models
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'tasks/home.html'
     context_object_name = 'tasks'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('search')
+        if search_query:
+            queryset = queryset.filter(Q(title__icontains=search_query))
+        
+        queryset = queryset.order_by(
+            Case(
+                When(priority='high', then=Value(1)),
+                When(priority='medium', then=Value(2)),
+                When(priority='low', then=Value(3)),
+                default=Value(4),  
+                output_field=models.IntegerField(),
+            )
+        )
+        return queryset
+
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskCreationForm 
     template_name = 'tasks/task_create.html'
-    success_url = reverse_lazy('task_list')
+    success_url = reverse_lazy('tasks:task_list')
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
